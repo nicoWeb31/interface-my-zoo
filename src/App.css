@@ -3,3 +3,21 @@ h1,h2,h4,h5,h6{
     font-family: 'Indie Flower', cursive;
 
 }
+
+._site{
+
+    min-height: 100vh;
+    margin-bottom: -140px;
+
+}
+
+footer,._minSite{
+
+    height: 140px;
+
+}
+
+._footerLink:hover{
+    color: rgb(187, 181, 199) !important;
+}
+

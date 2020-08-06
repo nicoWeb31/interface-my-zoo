@@ -3,13 +3,17 @@ import NavBar from '../../conponents/NavBar';
 import {Switch, Route} from "react-router-dom";
 import Acceuil from "./Acceuil/Acceuil";
 import Contact from "./Contact/Contact";
-import Error from "../../conponents/error/Error"
+import Error from "../../conponents/error/Error";
+import Footer from "../../conponents/Footer"
 
 class Site extends Component {
 
     render() {
         return (
             <>
+
+            <div className="_site">
+
                 <NavBar/>
                 <Switch>
 
@@ -19,7 +23,13 @@ class Site extends Component {
 
 
                 </Switch>
+                <div className="_minSite">
 
+                </div>
+
+            </div>
+
+                <Footer/>
 
             </>
         );
