@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 
 class Contact extends Component {
     state = {  }
+
+
+    componentDidMount(){
+        document.title = "Contact"
+    }
+
     render() {
         return (
             <div>
