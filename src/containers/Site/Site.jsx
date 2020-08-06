@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
-import NavBar from '../../conponents/NavBar'
+import NavBar from '../../conponents/NavBar';
+import {Switch, Route} from "react-router-dom";
+import Acceuil from "./Acceuil/Acceuil";
+import Contact from "./Contact/Contact";
+import Error from "../../conponents/error/Error"
 
 class Site extends Component {
 
@@ -7,7 +11,16 @@ class Site extends Component {
         return (
             <>
                 <NavBar/>
-                Site des animaux
+                <Switch>
+
+                    <Route path = "/" exact render={()=> <Acceuil/>}/>
+                    <Route path = "/contact" exact render={()=> <Contact/>}/>
+                    <Route render={()=> <Error type="404"/>}/>
+
+
+                </Switch>
+
+
             </>
         );
     }
