@@ -1,0 +1,3 @@
+
+//api php-api front-animaux
+GET http://localhost/php-api/front/animaux
