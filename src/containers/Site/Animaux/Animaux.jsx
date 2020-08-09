@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import TitreHone from '../../../conponents/Titres/TitreHOne';
 import axios from "axios";
 import Animal from "./Animal";
-import Button from "../../../conponents/Button"
+import Button from "../../../conponents/Button";
+
 
 class Animaux extends Component {
     constructor(props) {
@@ -10,7 +11,9 @@ class Animaux extends Component {
         this.state = {
             animaux: null,
             filtreFamille : null,
-            filtreContinent : null
+            filtreContinent : null,
+            listeFamille: null,
+            listeContinent : null
         };
 
 
@@ -55,8 +58,27 @@ class Animaux extends Component {
 
     }
 
+    loadFamille =() =>{
+
+        axios.get(`http://localhost/php-api/front/familles`)
+        .then(response => {
+            this.setState({ listeFamille: Object.values(response.data) })
+
+        })
+
+    }
+
+
     componentDidMount = () => {
         this.loadData();
+        this.loadFamille();
+
+
+        axios.get(`http://localhost/php-api/front/continents`)
+        .then(response => {
+            this.setState({ listeContinent: Object.values(response.data) })
+
+        })
     }
 
     componentDidUpdate =(oldProps,oldState)=>{
@@ -71,20 +93,30 @@ class Animaux extends Component {
 
 
     handeleSelectionFamille = (idFamille) =>{
-        console.log(`demande de ${idFamille}`)
-        this.setState({filtreFamille : idFamille})
+        console.log(`demande de ${idFamille}`);
+        if(idFamille == null) this.handeleSelectionClearFam()
+        else this.setState({filtreFamille : idFamille});
 
     }
 
     handeleSelectionContinet = (idcontinent) =>{
-        console.log(`demande de ${idcontinent}`)
-        this.setState({filtreContinent : idcontinent})
+        console.log(`demande de ${idcontinent}`);
+        if(idcontinent == null)this.handeleSelectionClearCont()
+        else this.setState({filtreContinent : idcontinent});
 
 
     }
 
-    handeleSelectionClear = () =>{
-        this.setState({filtreContinent : null,filtreFamille : null})
+    handeleSelectionClearCont = () =>{
+        this.setState({filtreContinent : null})
+    }
+
+    handeleSelectionClearFam = () =>{
+        this.setState({filtreFamille : null})
+    }
+
+    selectFamilles = () =>{
+        this.setState({animaux : this.state.listeFamille})
     }
 
 
@@ -97,17 +129,57 @@ class Animaux extends Component {
             <>
 
                 <TitreHone value="Les animaux du park" bgcolor="primary" />
-                {
-                    (this.state.filtreContinent || this.state.filtreFamille) && <span> Filtre :</span>
-                }
+                
+                <div className="container-fluid">
+                    <span> Filtre :</span>
+
+                    <select onChange={(e)=> this.handeleSelectionContinet(e.target.value)}>
+                        <option value = ""
+                        selected={this.state.filtreContinent === null ? "selected" : ""}
+                        >continent</option>
+                        {
+                            this.state.listeContinent && this.state.listeContinent.map(cont =>{
+                                return <option value={cont.continent}
+                                selected={this.state.filtreContinent === cont.continent ? "selected" : ""}
+                                >{cont.continent_libelle}</option>
+                            })
+                        }
+
+                    </select>
+
+
+                    <select onChange={(e)=> this.handeleSelectionFamille(e.target.value)}>
+                        <option value = "">Familles</option>
+                        {
+                            this.state.listeFamille && this.state.listeFamille.map(fam =>{
+                                return <option value={fam.famille_id}>{fam.famille_libelle}</option>
+                            })
+                        }
+
+                    </select>
+
                 {
                     this.state.filtreContinent &&
-                    <Button typeBtn = "warning" click={this.handeleSelectionClear}>{this.state.filtreContinent}</Button>
+                    <Button typeBtn = "warning" 
+                    click={this.handeleSelectionClear}>
+                    <i className="fa fa-times" aria-hidden="true"></i> &nbsp;
+
+                    {this.state.filtreContinent}
+                    </Button>
                 }
                 {
                     this.state.filtreFamille &&
-                    <Button typeBtn = "warning" click={this.handeleSelectionClear}>{this.state.filtreFamille}</Button>
+                    <Button typeBtn = "warning" 
+                    click={this.handeleSelectionClear}>
+                    <i className="fa fa-times" aria-hidden="true"></i> &nbsp;
+
+                    {this.state.filtreFamille}
+                    </Button>
                 }
+
+
+                </div>
+                
 
                 <div className="container">
 

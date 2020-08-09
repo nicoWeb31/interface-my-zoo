@@ -1,3 +1,5 @@
 
 //api php-api front-animaux
-GET http://localhost/php-api/front/animaux/asie
+# GET http://localhost/php-api/front/familles
+
+GET http://localhost/php-api/front/continents
