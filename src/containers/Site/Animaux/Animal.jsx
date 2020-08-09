@@ -11,7 +11,7 @@ class Animal extends Component {
 
             <>
 
-                <div className="card text-white bg-secondary mb-3" style={{ "max-width": "20rem", "heigth": "150px" }}>
+                <div className="card text-white bg-secondary mb-3" style={{ "maxWidth": "20rem", "heigth": "150px" }}>
                     <div className="card-header">
                         <h3 className="text-center">{this.props.data.nom}</h3>
                     </div>
@@ -21,7 +21,9 @@ class Animal extends Component {
                             <img src={this.props.data.image} alt={this.props.data.nom} className="img-fluid h-100" />
                         </div>
                         <div className="card-body">
-                            <Button typeBtn="primary" ><h3>Famille :</h3></Button>
+                            <Button typeBtn="primary" 
+                            click={()=>this.props.selecFamille(this.props.data.famille.idFamille)}
+                            ><h3>Famille :</h3></Button>
                             <div className="alert alert-success">
 
                                 <span>{this.props.data.famille.libelleFamille}</span>
@@ -48,7 +50,11 @@ class Animal extends Component {
                                             break;
                                             default: colorBtn = "primary";
                                         }
-                                        return <Button typeBtn={colorBtn} key={continent.idContinent} css="m-1">{continent.continentLibelle}</Button>
+                                        return <Button 
+                                        typeBtn={colorBtn} 
+                                        key={continent.idContinent} css="m-1" 
+                                        click={()=>this.props.selectContinent(continent.idContinent)}
+                                        >{continent.continentLibelle}</Button>
                                     })
                                 }
 
