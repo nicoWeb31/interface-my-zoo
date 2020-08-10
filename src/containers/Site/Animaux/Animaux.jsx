@@ -122,7 +122,15 @@ class Animaux extends Component {
 
     render() {
 
-        console.log(this.state.animaux)
+        console.log(this.state.animaux);
+
+        // let nomFamille ="";
+        // if(this.state.filtreFamille){
+        //     const numIndexFamilleFiltre = this.state.listeFamille.findIndex(famille => {
+        //         return famille.famille_id === this.state.filtreFamille
+        //     })
+        //     nomFamille = this.state.listeFamille[numIndexFamilleFiltre].famille_libelle
+        // }
 
 
         return (
@@ -161,7 +169,7 @@ class Animaux extends Component {
                 {
                     this.state.filtreContinent &&
                     <Button typeBtn = "warning" 
-                    click={this.handeleSelectionClear}>
+                    click={this.handeleSelectionClearCont}>
                     <i className="fa fa-times" aria-hidden="true"></i> &nbsp;
 
                     {this.state.filtreContinent}
@@ -170,7 +178,7 @@ class Animaux extends Component {
                 {
                     this.state.filtreFamille &&
                     <Button typeBtn = "warning" 
-                    click={this.handeleSelectionClear}>
+                    click={this.handeleSelectionClearFam}>
                     <i className="fa fa-times" aria-hidden="true"></i> &nbsp;
 
                     {this.state.filtreFamille}
