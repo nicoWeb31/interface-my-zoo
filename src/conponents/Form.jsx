@@ -1,5 +1,5 @@
 import React from 'react';
-import {withFormik} from "formik";
+import { withFormik } from "formik";
 import * as yup from "yup";
 
 
@@ -10,32 +10,51 @@ const Form = (props) => (
         <form>
             <div className="form-group">
                 <label htmlfor="exampleInputEmail1">Nom :</label>
-                <input type="text" className="form-control" id="nom" aria-describedby="emailHelp" placeholder="Votre Nom " 
+                <input type="text" className="form-control" id="nom" aria-describedby="emailHelp" placeholder="Votre Nom "
                     name="nom"
                     onChange={props.handleChange}
                     value={props.values.nom}
+                    onBlur={props.handleBlur}
                 />
-                {/* <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small> */}
+                {
+                    props.errors.nom && props.touched.nom &&
+                    <small id="emailHelp" className="form-text bg-danger text-white">{props.errors.nom}</small>
+
+                }
             </div>
 
             <div className="form-group">
                 <label htmlfor="email">Email :</label>
-                <input type="email" className="form-control" id="email" aria-describedby="emailHelp" placeholder="Votre Mail " 
-                name="email"
-                onChange={props.handleChange}
-                value={props.values.email}
-
+                <input type="email" className="form-control" id="email" aria-describedby="emailHelp" placeholder="Votre Mail "
+                    name="email"
+                    onChange={props.handleChange}
+                    value={props.values.email}
+                    onBlur={props.handleBlur}
                 />
-                {/* <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small> */}
+
+                {
+                    props.errors.email && props.touched.email &&
+                    <small id="emailHelp" className="form-text bg-danger text-white">{props.errors.email}</small>
+
+                }
+
+
             </div>
 
             <div className="form-group">
                 <label htmlfor="message">Votre Message ?</label>
                 <textarea className="form-control" id="message" rows="3"
-                name="message"
-                onChange={props.handleChange}
-                value={props.values.message}
+                    name="message"
+                    onChange={props.handleChange}
+                    value={props.values.message}
+                    onBlur={props.handleBlur}
                 ></textarea>
+
+                {
+                    props.errors.message && props.touched.message &&
+                    <small id="emailHelp" className="form-text bg-danger text-white">{props.errors.message}</small>
+
+                }
             </div>
 
             <button type="submit" className="btn btn-primary" onClick={props.handleSubmit}>Envoyer</button>
@@ -46,15 +65,25 @@ const Form = (props) => (
 );
 
 export default withFormik({
-    mapPropsToValues : ()=>({
-        nom:"",
-        email:"",
-        message:""
+    mapPropsToValues: () => ({
+        nom: "",
+        email: "",
+        message: ""
     }),
     validationSchema: yup.object().shape({
+        nom: yup.string()
+            .min(5, "le nom de doit avoir au moins 5 caractére")
+            .required("le noms est obligatoire !"),
+        email: yup.string()
+            .email("l'email n'est pas au bon format")
+            .required("l'email est obligatoire !"),
+        message: yup.string()
+            .min(50, "le message doit faire au moins 50 caractéres !")
+            .max(500, "message trop long")
+            .required("le message est obligatoire !"),
 
     }),
-    handleSubmit: (value)=>{
+    handleSubmit: (value) => {
         alert('message envoyé');
     }
 })(Form);
