@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import TitreHOne from "../../../conponents/Titres/TitreHOne";
-import Form from "../../../conponents/Form"
+import Form from "../../../conponents/Form";
+import axios from "axios"
 
 class Contact extends Component {
     state = {  }
@@ -8,6 +9,18 @@ class Contact extends Component {
 
     componentDidMount(){
         document.title = "Page de Contact"
+    }
+
+    handeleMessage = (message) =>{
+        axios.post('http://localhost/php-api/front/contact',message)
+        .then(resp =>{
+            console.log(resp)
+        })
+        .catch(err =>{
+            console.log(err)
+        })
+
+
     }
 
     render() {
@@ -24,7 +37,7 @@ class Contact extends Component {
                     <h3>Vous prefére nous ecrire ?</h3>
 
 
-                    <Form></Form>
+                    <Form sendMail={this.handeleMessage}/>
 
                 </div>
             </div>

@@ -9,7 +9,7 @@ const Form = (props) => (
     <>
         <form>
             <div className="form-group">
-                <label htmlfor="exampleInputEmail1">Nom :</label>
+                <label htmlFor="exampleInputEmail1">Nom :</label>
                 <input type="text" className="form-control" id="nom" aria-describedby="emailHelp" placeholder="Votre Nom "
                     name="nom"
                     onChange={props.handleChange}
@@ -24,7 +24,7 @@ const Form = (props) => (
             </div>
 
             <div className="form-group">
-                <label htmlfor="email">Email :</label>
+                <label htmlFor="email">Email :</label>
                 <input type="email" className="form-control" id="email" aria-describedby="emailHelp" placeholder="Votre Mail "
                     name="email"
                     onChange={props.handleChange}
@@ -42,7 +42,7 @@ const Form = (props) => (
             </div>
 
             <div className="form-group">
-                <label htmlfor="message">Votre Message ?</label>
+                <label htmlFor="message">Votre Message ?</label>
                 <textarea className="form-control" id="message" rows="3"
                     name="message"
                     onChange={props.handleChange}
@@ -80,10 +80,16 @@ export default withFormik({
         message: yup.string()
             .min(50, "le message doit faire au moins 50 caractéres !")
             .max(500, "message trop long")
-            .required("le message est obligatoire !"),
+            .required("le message est obligatoire !")
 
     }),
-    handleSubmit: (value) => {
-        alert('message envoyé');
-    }
+    handleSubmit: (values,{props}) => {
+        const message = {
+            nom: values.nom,
+            email: values.email,
+            message: values.message
+        }
+        props.sendMail(message)
+    }    
+
 })(Form);
